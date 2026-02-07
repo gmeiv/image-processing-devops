@@ -1,9 +1,8 @@
 import cv2
 import os
-from PIL import Image
-from src.filters import apply_color_grading
-from src.filters import apply_chromatic_aberration
-from src.filters import apply_image_blending_reflection
+from PIL import Image, ImageEnhance
+from src.filters import (apply_color_grading, apply_chromatic_aberration, 
+                         apply_image_blending_reflection, apply_vignette)
 
 input_dir = "input"
 output_dir = "output"
@@ -17,9 +16,13 @@ def process_image(filename):
     img = apply_color_grading(img)
     img = apply_chromatic_aberration(img)
     img = apply_image_blending_reflection(img)
+    img = apply_vignette(img)
 
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     pil_img = Image.fromarray(img_rgb)
+
+    enhancer = ImageEnhance.Contrast(pil_img)
+    pil_img = enhancer.enhance(1.4)
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
