@@ -2,6 +2,7 @@ import cv2
 import os
 from PIL import Image
 from src.filters import apply_color_grading
+from src.filters import apply_chromatic_aberration
 
 input_dir = "input"
 output_dir = "output"
@@ -13,6 +14,7 @@ def process_image(filename):
         return
     
     img = apply_color_grading(img)
+    img = apply_chromatic_aberration(img)
 
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     pil_img = Image.fromarray(img_rgb)
