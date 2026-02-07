@@ -34,12 +34,12 @@ jobs:
     # 4 Run image processing automation
     - name: Run image processing
       run: |
-        python -m src.main.py
+        python -m src.main
 
     # 5 Run automated tests (pytest)
     - name: Run tests
       run: |
-        pytest tests.test_filters.py
+        PYTHONPATH=. pytest tests/
 
     # 6 Commit processed images back to repo
     - name: Deploy processed images
