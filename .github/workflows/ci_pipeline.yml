@@ -41,12 +41,10 @@ jobs:
       run: |
         PYTHONPATH=. pytest tests/
 
-    # 6 Commit processed images back to repo
-    - name: Deploy processed images
-      if: success()
-      run: |
-        git config --global user.name "DevOps-Bot"
-        git config --global user.email "devops-bot@github.com"
-        git add output/
-        git commit -m "Auto-processed images" || echo "No changes"
-        git push
+    # 6 Upload processed images back to repo
+    - name: Upload processed images
+      uses: actions/upload-artifact@v4
+      with:
+        name: processed-images
+        path: output/
+
