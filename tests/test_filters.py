@@ -4,23 +4,21 @@ import numpy as np
 import os
 import sys
 
-# This allows the test to find the 'src' folder
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from src.filters import apply_color_grading
+from src.filters import apply_color_grading, apply_chromatic_aberration
 
 def test_apply_color_grading():
     dummy_img = np.zeros((100, 100, 3), dtype=np.uint8)
     processed_img = apply_color_grading(dummy_img)
     assert processed_img is not None
+    assert processed_img.shape == (100, 100, 3)
 
-def test_create_output_folder():
-   
-    output_path = "output"
-    if not os.path.exists(output_path):
-        os.makedirs(output_path) 
-    
-    assert os.path.exists(output_path)
-    
-    with open(os.path.join(output_path, ".gitkeep"), "w") as f:
-        f.write("")
+def test_apply_chromatic_aberration():
+    dummy_img = np.zeros((100, 100, 3), dtype=np.uint8)
+    processed_img = apply_chromatic_aberration(dummy_img)
+    assert processed_img is not None
+    assert processed_img.shape == (100, 100, 3)
+
+def test_input_directory_exists():
+    assert os.path.exists("input"), "Input directory is missing!"
