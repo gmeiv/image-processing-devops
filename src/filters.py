@@ -14,3 +14,19 @@ def apply_chromatic_aberration(image, shift=5):
     b = np.roll(b, -shift, axis=1)
     r = np.roll(r, shift, axis=1)
     return cv2.merge([b, g, r])
+
+def apply_image_blending_reflection(image):
+    h, w = image.shape[:2]
+    ref_line = int(h * 0.6)
+    
+    # Flipping to create reflection
+    top_h = h - ref_line
+    top_section = image[ref_line - top_h : ref_line, :]
+    reflection = cv2.flip(top_section, 0)
+
+    # Gaussian blur for smooth reflection
+    reflection = cv2.GaussianBlur(reflection, (45, 45), 15)
+
+    # Image Blending
+    image[ref_line:h, :] = cv2.addWeighted(image[ref_line:h, :], 0.4, reflection, 0.6, 0)
+    return image
