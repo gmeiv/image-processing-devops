@@ -27,7 +27,7 @@ def process_image(filename):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    pil_img.save(os.path.join(output_dir, f"color_graded_{filename}"))
+    pil_img.save(os.path.join(output_dir, f"final_output_{filename}"))
     print(f"Successfully processed: {filename}")
 
 if __name__ == "__main__":
